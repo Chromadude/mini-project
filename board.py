@@ -25,9 +25,12 @@ class Board:
         changex, changey = new_coord[0] - initial_coord[0], new_coord[1] - initial_coord[1]
         for move in self.legal_moves[int(piece[1])]:
             if move[0] == changex and move[1] == changey:
-                self.set_piece_at(*new_coord, piece)
-                self.set_piece_at(*initial_coord, [0, 0])
-                return 1
+                if self.get_piece_at(*new_coord)[0] == player+1:
+                    return 0
+                else:
+                    self.set_piece_at(*new_coord, piece)
+                    self.set_piece_at(*initial_coord, [0, 0])
+                    return 1
         return 0
 
     def draw(self, surf, images):
@@ -35,13 +38,10 @@ class Board:
 
         for y, row in enumerate(self.rows):
             for x, value in enumerate(row):
-                pygame.draw.line(surf, (0, 0, 0), (x* self.squaresize, 0), (x * self.squaresize, self.screenheight))
+                pygame.draw.line(surf, (0, 0, 0), (x * self.squaresize, 0), (x * self.squaresize, self.screenheight))
                 pygame.draw.line(surf, (0, 0, 0), (0, y * self.squaresize), (self.screenwidth, y * self.squaresize))
                 if value[0]:
                     surf.blit(images[int(value[1] + (value[0] - 1) * 7)], (x * self.squaresize, y * self.squaresize))
-
-
-import generator
 
 # pygame.init()
 # surface = pygame.display.set_mode((width * SQUARESIZE, height * SQUARESIZE))

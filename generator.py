@@ -9,7 +9,7 @@ options = [[UP, RIGHT, DOWN, LEFT], [RIGHT, DOWN, LEFT, UP], [LEFT, UP, RIGHT, D
 
 
 def moves(num_of_pieces, max_move_length):
-    moves = []
+    all_moves = []
     for i in range(num_of_pieces):
         not_right = True
         while not_right:
@@ -34,8 +34,8 @@ def moves(num_of_pieces, max_move_length):
                 else:
                     not_right = 1
             if not not_right:
-                moves.append(raw_move)
-    return moves
+                all_moves.append(raw_move)
+    return all_moves
 
 
 def size():
@@ -43,7 +43,7 @@ def size():
 
 
 def pieces_per_player(board_size):
-    return random.randrange(1, board_size[1]//2)*board_size[0]
+    return random.randrange(1, (1+board_size[1])//2)*board_size[0]
 
 
 def types_of_piece(max_pieces):
