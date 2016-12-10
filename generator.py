@@ -7,7 +7,7 @@ RIGHT = 3
 options = [[UP, RIGHT, DOWN, LEFT], [RIGHT, DOWN, LEFT, UP], [LEFT, UP, RIGHT, DOWN]]
 
 
-def generate_moves(num_of_pieces, max_move_length):
+def moves(num_of_pieces, max_move_length):
     moves = []
     for i in range(num_of_pieces):
         not_right = True
@@ -37,5 +37,13 @@ def generate_moves(num_of_pieces, max_move_length):
     return moves
 
 
-def generate_size():
+def size():
     return [random.randrange(3, 21), random.randrange(3, 21)]
+
+
+def pieces_per_player(board_size):
+    return random.randrange(2, board_size[0]*board_size[1]/2)
+
+
+def types_of_piece(max_pieces):
+    return random.randrange(1, max_pieces+1)

@@ -1,9 +1,12 @@
 import game
-from generator import generate_moves, generate_size
+import generator
 import pygame
 
-g = game.Game([generate_size(), generate_moves(4, 4), 48])
-print(g.legalmoves)
+size = generator.size()
+pieces_per_player = generator.pieces_per_player(size)
+types_of_piece = generator.types_of_piece(pieces_per_player)
+legal_moves = generator.moves(types_of_piece, 4)
+g = game.Game([legal_moves, 48])
 g.board.set_piece_at(0, 0, [1, 0])
 pygame.init()
 surface = pygame.display.set_mode((g.board.screenwidth, g.board.screenheight))
