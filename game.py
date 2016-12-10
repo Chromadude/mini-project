@@ -12,7 +12,7 @@ Options
 
 class Game:
     def __init__(self, options):
-        self.board = board.Board(options[0], options[1], options[2])
+        self.board = board.Board(*options)
         self.size = options[0]
         self.legalmoves = options[1]
         self.squaresize = options[2]

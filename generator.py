@@ -1,4 +1,5 @@
 import random
+import numpy
 
 UP = 0
 DOWN = 1
@@ -42,8 +43,23 @@ def size():
 
 
 def pieces_per_player(board_size):
-    return random.randrange(2, board_size[0]*board_size[1]/2)
+    return random.randrange(1, board_size[1]//2)*board_size[0]
 
 
 def types_of_piece(max_pieces):
     return random.randrange(1, max_pieces+1)
+
+
+def starting_positions(total_pieces, num_of_types, boardsize):
+    pieces = [[] for _ in range(1+((total_pieces-1)//boardsize[0]))]
+    for i in range(total_pieces):
+        pieces[i//boardsize[0]].append(random.randrange(num_of_types))
+    board = numpy.zeros([boardsize[1], boardsize[0], 2])
+    for y, row1 in enumerate(pieces):
+        for x, piece in enumerate(row1):
+            board[y][x] = [1, piece]
+    for y, row1 in enumerate(pieces):
+        for x, piece in enumerate(row1):
+            board[-(y+1)][-(x+1)] = [2, piece]
+
+    return board

@@ -3,10 +3,10 @@ import pygame
 
 
 class Board:
-    def __init__(self, size, legal_moves, squaresize):
+    def __init__(self, size, legal_moves, squaresize, starting_board):
         # grid of: (owner, type)
         # owner is 0: empty, 1: player 1 etc
-        self.rows = np.zeros([size[1], size[0], 2])
+        self.rows = np.array(starting_board)
         self.legal_moves = legal_moves
         self.squaresize = squaresize
         self.screenwidth = squaresize*size[0]
