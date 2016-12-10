@@ -28,3 +28,7 @@ def generate_moves(num_of_pieces, max_move_length):
             raw_move.append([x, y])
         moves.append(raw_move)
     return moves
+
+
+def generate_size():
+    return [random.randrange(3, 21), random.randrange(3, 21)]
