@@ -23,7 +23,6 @@ class Game:
         images = load_shapes(self.squaresize)
         playing = 1
         while playing:
-            # self.player = not self.player
             self.board.draw(surface, images)
             if self.held:
                 x, y = pygame.mouse.get_pos()
@@ -39,6 +38,8 @@ class Game:
                 else:
                     events.append(event)
             self.user_handle(events)
+            if self.board.ended():
+                return int(not self.player)
 
     def user_handle(self, events):
         for event in events:
@@ -55,7 +56,8 @@ class Game:
                 x = x // self.squaresize
                 y = y // self.squaresize
                 if 0 <= x < self.size[0] and 0 <= y < self.size[1]:
-                    self.board.place(self.held[1], (x, y), self.player)
+                    if self.board.place(self.held[1], (x, y), self.player):
+                        self.player = not self.player
                 self.held = 0
 
 

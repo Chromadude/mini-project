@@ -7,7 +7,7 @@ while not sum(playable):
     size = generator.size()
     pieces_per_player = generator.pieces_per_player(size)
     types_of_piece = generator.types_of_piece(min(pieces_per_player, 7))
-    legal_moves = generator.moves(types_of_piece, 4)
+    legal_moves = generator.moves(types_of_piece, min(size)//2)
     starting_board = generator.starting_positions(pieces_per_player, types_of_piece, size)
     test_game = game.Game([size, legal_moves, 48, starting_board])
     playable = [0 for _ in range(types_of_piece)]
@@ -20,4 +20,5 @@ while not sum(playable):
 g = game.Game([size, legal_moves, 48, starting_board])
 pygame.init()
 surface = pygame.display.set_mode((g.board.screenwidth, g.board.screenheight))
-g.start(surface)
+winner = g.start(surface)
+print(winner)

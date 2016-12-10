@@ -42,6 +42,16 @@ class Board:
                 pygame.draw.line(surf, (0, 0, 0), (0, y * self.squaresize), (self.screenwidth, y * self.squaresize))
                 if value[0]:
                     surf.blit(images[int(value[1] + (value[0] - 1) * 7)], (x * self.squaresize, y * self.squaresize))
+    def ended(self):
+        dead = [1, 1]
+        for row in self.rows:
+            for piece in row:
+                if piece[0] == 1:
+                    dead[0] = 0
+                elif piece[0] == 2:
+                    dead[1] = 0
+        return sum(dead) == 1
+
 
 # pygame.init()
 # surface = pygame.display.set_mode((width * SQUARESIZE, height * SQUARESIZE))
