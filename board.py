@@ -55,13 +55,15 @@ class Board:
 
     def place(self, initial_coord, new_coord, player):
         piece = self.get_piece_at(*initial_coord)
-        if piece[1] != player:
+        if piece[0] != player+1:
             return 0
         changex, changey = new_coord[0] - initial_coord[0], new_coord[1] - initial_coord[1]
-        if (changex, changey) not in self.legal_moves:
-            return 0
-        else:
-            self.set_piece_at(*new_coord, piece)
+        for move in self.legal_moves[int(piece[1])]:
+            if move[0] == changex and move[1] == changey:
+                self.set_piece_at(*new_coord, piece)
+                self.set_piece_at(*initial_coord, [0, 0])
+                return 1
+        return 0
 
     def draw(self, surf, images):
         surf.fill((255, 255, 255))
@@ -77,11 +79,8 @@ class Board:
 
 import generator
 
-b = Board(5, generator.generate_moves(4, 4))
-
 # pygame.init()
 # surface = pygame.display.set_mode((width * SQUARESIZE, height * SQUARESIZE))
 # b = Board([width, height])
 # images = load_shapes()
 # b.draw(surface, images)
-# input()
