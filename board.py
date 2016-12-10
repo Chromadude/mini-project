@@ -6,7 +6,7 @@ class Board:
     def __init__(self, size, legal_moves, squaresize):
         # grid of: (owner, type)
         # owner is 0: empty, 1: player 1 etc
-        self.rows = np.zeros(size + [2])
+        self.rows = np.zeros([size[1], size[0], 2])
         self.legal_moves = legal_moves
         self.squaresize = squaresize
         self.screenwidth = squaresize*size[0]
@@ -35,11 +35,10 @@ class Board:
 
         for y, row in enumerate(self.rows):
             for x, value in enumerate(row):
-                pygame.draw.line(surf, (0, 0, 0), (y * self.squaresize, 0), (y * self.squaresize, self.screenheight))
-                pygame.draw.line(surf, (0, 0, 0), (0, x * self.squaresize), (self.screenwidth, x * self.squaresize))
+                pygame.draw.line(surf, (0, 0, 0), (x* self.squaresize, 0), (x * self.squaresize, self.screenheight))
+                pygame.draw.line(surf, (0, 0, 0), (0, y * self.squaresize), (self.screenwidth, y * self.squaresize))
                 if value[0]:
                     surf.blit(images[int(value[1] + (value[0] - 1) * 7)], (x * self.squaresize, y * self.squaresize))
-        pygame.display.flip()
 
 
 import generator
