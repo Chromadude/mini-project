@@ -19,7 +19,7 @@ class Game:
         self.player = 0
         self.held = 0
 
-    def start(self, surface):
+    def start(self, surface, p1="player", p2="computer"):
         images = load_shapes(self.squaresize)
         playing = 1
         while playing:
@@ -37,9 +37,19 @@ class Game:
                     return
                 else:
                     events.append(event)
-            self.user_handle(events)
+            if self.player:
+                self.handle_turn(events, p1)
+            else:
+                self.handle_turn(events, p2)
             if self.board.ended():
                 return int(not self.player)
+
+    def handle_turn(self, events, player):
+        if player=="player":
+            self.user_handle(events)
+        else:
+            self.ai_handle(events)
+
 
     def user_handle(self, events):
         for event in events:
@@ -59,6 +69,10 @@ class Game:
                     if self.board.place(self.held[1], (x, y), self.player):
                         self.player = not self.player
                 self.held = 0
+
+    def ai_handle(self, events):
+        pass
+
 
 
 shapes_designs = [
