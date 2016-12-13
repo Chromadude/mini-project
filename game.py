@@ -21,10 +21,18 @@ class Game:
         self.squaresize = options[2]
         self.player = 0
         self.held = 0
+        self.possible_moves = []
 
     def start(self, surface, p1="player", p2="computer"):
+        self.board.reset()
+        self.player = 0
+        self.held = 0
         images = load_shapes(self.squaresize)
         playing = 1
+        self.possible_moves = self.board.get_possible_moves(self.player)
+        green_square = pygame.Surface((self.squaresize, self.squaresize))
+        green_square.fill((0, 255, 0))
+        green_square.set_alpha(128)
         while playing:
             self.board.draw(surface, images)
             if self.held:
@@ -33,11 +41,13 @@ class Game:
                 y = y // self.squaresize
                 surface.blit(images[int(self.held[0][1] + (self.held[0][0] - 1) * 7)],
                              (x * self.squaresize, y * self.squaresize))
-            pygame.display.flip()
+                for move in self.possible_moves:
+                    if move[0][0] == self.held[1][0] and move[0][1] == self.held[1][1]:
+                        surface.blit(green_square, (move[1][0]*self.squaresize, move[1][1]*self.squaresize))
             events = []
             for event in pygame.event.get():
                 if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                    return
+                    return -1, 0
                 else:
                     events.append(event)
             if self.player:
@@ -45,13 +55,14 @@ class Game:
             else:
                 self.handle_turn(events, p2)
             if self.board.ended():
-                return int(not self.player)
+                return int(not self.player), 1
+            pygame.display.flip()
 
     def handle_turn(self, events, player):
         if player == "player":
             self.user_handle(events)
         else:
-            self.ai_handle(events)
+            self.ai_handle()
 
     def user_handle(self, events):
         for event in events:
@@ -69,17 +80,22 @@ class Game:
                 y = y // self.squaresize
                 if 0 <= x < self.size[0] and 0 <= y < self.size[1]:
                     if self.board.place(self.held[1], (x, y), self.player):
-                        self.player = not self.player
+                        self.turn_change()
                 self.held = 0
 
-    def ai_handle(self, events):
+    def ai_handle(self):
+        """Not currently useful"""
         not_placed = True
         while not_placed:
             x1, y1 = random.randrange(self.size[0]), random.randrange(self.size[1])
             x2, y2 = random.randrange(self.size[0]), random.randrange(self.size[1])
             if self.board.place((x1, y1), (x2, y2), self.player):
-                self.player = not self.player
                 not_placed = True
+                self.turn_change()
+
+    def turn_change(self):
+        self.player = not self.player
+        self.possible_moves = self.board.get_possible_moves(self.player)
 
 
 shapes_designs = [
