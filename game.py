@@ -1,5 +1,8 @@
 import board
 import pygame
+import random
+import tensorflow as tf
+import numpy as np
 
 """
 Options
@@ -45,11 +48,10 @@ class Game:
                 return int(not self.player)
 
     def handle_turn(self, events, player):
-        if player=="player":
+        if player == "player":
             self.user_handle(events)
         else:
             self.ai_handle(events)
-
 
     def user_handle(self, events):
         for event in events:
@@ -71,8 +73,13 @@ class Game:
                 self.held = 0
 
     def ai_handle(self, events):
-        pass
-
+        not_placed = True
+        while not_placed:
+            x1, y1 = random.randrange(self.size[0]), random.randrange(self.size[1])
+            x2, y2 = random.randrange(self.size[0]), random.randrange(self.size[1])
+            if self.board.place((x1, y1), (x2, y2), self.player):
+                self.player = not self.player
+                not_placed = True
 
 
 shapes_designs = [

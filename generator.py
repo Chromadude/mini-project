@@ -26,6 +26,8 @@ def game(square_size):
                         if test_game.board.place([x, y], [x2, y2], 0):
                             playable[int(test_game.board.get_piece_at(x2, y2)[1])] = 1
 
+    return board_size, legal_moves, starting_board
+
 
 
 
