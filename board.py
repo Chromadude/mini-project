@@ -69,8 +69,3 @@ class Board:
                         moves.append(move)
         return moves
 
-# pygame.init()
-# surface = pygame.display.set_mode((width * SQUARESIZE, height * SQUARESIZE))
-# b = Board([width, height])
-# images = load_shapes()
-# b.draw(surface, images)

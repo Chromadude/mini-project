@@ -74,7 +74,7 @@ def get_pieces_per_player(board_size):
 
 
 def get_types_of_piece(max_pieces):
-    return random.randrange(1, max_pieces + 1)
+    return random.randrange(2, max_pieces + 1)
 
 
 def get_starting_positions(total_pieces, num_of_types, boardsize):
